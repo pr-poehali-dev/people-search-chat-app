@@ -1,0 +1,33 @@
+{
+  "tests": [
+    {
+      "name": "GET statuses - empty",
+      "method": "GET",
+      "path": "/?user_id=default_user",
+      "expectedStatus": 200,
+      "expectedBody": {"statuses": []},
+      "bodyMatcher": "partial"
+    },
+    {
+      "name": "POST create status",
+      "method": "POST",
+      "path": "/",
+      "body": {
+        "user_id": "default_user",
+        "media_url": "https://example.com/photo.jpg",
+        "media_type": "image"
+      },
+      "expectedStatus": 200,
+      "expectedBody": {"ok": true},
+      "bodyMatcher": "partial"
+    },
+    {
+      "name": "GET statuses - has one",
+      "method": "GET",
+      "path": "/?user_id=default_user",
+      "expectedStatus": 200,
+      "expectedBody": {"statuses": [{}]},
+      "bodyMatcher": "partial"
+    }
+  ]
+}

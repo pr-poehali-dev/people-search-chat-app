@@ -1,0 +1,38 @@
+{
+  "tests": [
+    {
+      "name": "GET profile - default user",
+      "method": "GET",
+      "path": "/?user_id=default_user",
+      "expectedStatus": 200,
+      "expectedBody": {"found": false},
+      "bodyMatcher": "partial"
+    },
+    {
+      "name": "POST save profile",
+      "method": "POST",
+      "path": "/",
+      "body": {
+        "user_id": "default_user",
+        "name": "Иван Космос",
+        "username": "ivan.orbit",
+        "bio": "Исследую цифровую вселенную",
+        "private_profile": false,
+        "hide_online": false,
+        "who_can_message": true,
+        "hide_status_views": false
+      },
+      "expectedStatus": 200,
+      "expectedBody": {"ok": true},
+      "bodyMatcher": "partial"
+    },
+    {
+      "name": "GET profile - after save",
+      "method": "GET",
+      "path": "/?user_id=default_user",
+      "expectedStatus": 200,
+      "expectedBody": {"found": true},
+      "bodyMatcher": "partial"
+    }
+  ]
+}

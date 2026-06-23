@@ -45,12 +45,7 @@ const chats = [
   { name: 'Дизайн & Тренды', avatar: AVATAR_W, last: 'Алина: новый разбор готов', time: '1 ч', unread: 12, online: false },
 ];
 
-const statusViewers = [
-  { name: 'София Климова', avatar: AVATAR_W, time: '5 минут назад' },
-  { name: 'Артём Белов', avatar: AVATAR_M, time: '12 минут назад' },
-  { name: 'Алина Рей', avatar: AVATAR_W, time: '28 минут назад' },
-  { name: 'Максим Орлов', avatar: AVATAR_M, time: '1 час назад' },
-];
+
 
 const Index = () => {
   const [active, setActive] = useState('Лента');
@@ -106,7 +101,7 @@ const Index = () => {
                   </button>
                 );
                 return s.add ? (
-                  <Status key={i} avatar={s.avatar} viewers={statusViewers} trigger={inner} />
+                  <Status key={i} trigger={inner} />
                 ) : (
                   <span key={i}>{inner}</span>
                 );
@@ -202,7 +197,6 @@ const Index = () => {
                 ))}
               </div>
               <ProfileSettings
-                avatar={AVATAR_M}
                 trigger={
                   <Button className="w-full mt-4 rounded-full gradient-brand border-0 text-white">
                     <Icon name="Settings" size={16} className="mr-1.5" /> Настройки профиля
