@@ -2,6 +2,8 @@ import { useState } from 'react';
 import Icon from '@/components/ui/icon';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
+import ProfileSettings from '@/components/ProfileSettings';
+import Status from '@/components/Status';
 
 const AVATAR_W = 'https://cdn.poehali.dev/projects/ca756fe0-1a9b-44c2-b927-80ad70b74e8a/files/432ae09e-7556-4e45-ab34-c76f109dc856.jpg';
 const AVATAR_M = 'https://cdn.poehali.dev/projects/ca756fe0-1a9b-44c2-b927-80ad70b74e8a/files/d9249201-26d5-462c-a558-7cc3b40491d1.jpg';
@@ -43,6 +45,13 @@ const chats = [
   { name: 'Дизайн & Тренды', avatar: AVATAR_W, last: 'Алина: новый разбор готов', time: '1 ч', unread: 12, online: false },
 ];
 
+const statusViewers = [
+  { name: 'София Климова', avatar: AVATAR_W, time: '5 минут назад' },
+  { name: 'Артём Белов', avatar: AVATAR_M, time: '12 минут назад' },
+  { name: 'Алина Рей', avatar: AVATAR_W, time: '28 минут назад' },
+  { name: 'Максим Орлов', avatar: AVATAR_M, time: '1 час назад' },
+];
+
 const Index = () => {
   const [active, setActive] = useState('Лента');
 
@@ -77,24 +86,31 @@ const Index = () => {
         <div className="space-y-6 min-w-0">
           <section className="animate-fade-in">
             <div className="flex gap-3 overflow-x-auto scrollbar-hide pb-1">
-              {stories.map((s, i) => (
-                <button key={i} className="flex flex-col items-center gap-2 shrink-0 group">
-                  <div className={`p-[3px] rounded-full ${s.add ? 'bg-muted' : 'story-ring'} group-hover:scale-105 transition-transform`}>
-                    <div className="p-[2px] bg-background rounded-full relative">
-                      <img src={s.avatar} alt={s.name} className="w-16 h-16 rounded-full object-cover" />
-                      {s.add && (
-                        <span className="absolute -bottom-1 -right-1 w-6 h-6 rounded-full gradient-brand flex items-center justify-center ring-2 ring-background">
-                          <Icon name="Plus" size={14} className="text-white" />
-                        </span>
-                      )}
-                      {s.live && (
-                        <span className="absolute -bottom-1 left-1/2 -translate-x-1/2 text-[10px] font-bold text-white bg-secondary px-2 py-0.5 rounded-full ring-2 ring-background">LIVE</span>
-                      )}
+              {stories.map((s, i) => {
+                const inner = (
+                  <button className="flex flex-col items-center gap-2 shrink-0 group">
+                    <div className={`p-[3px] rounded-full ${s.add ? 'bg-muted' : 'story-ring'} group-hover:scale-105 transition-transform`}>
+                      <div className="p-[2px] bg-background rounded-full relative">
+                        <img src={s.avatar} alt={s.name} className="w-16 h-16 rounded-full object-cover" />
+                        {s.add && (
+                          <span className="absolute -bottom-1 -right-1 w-6 h-6 rounded-full gradient-brand flex items-center justify-center ring-2 ring-background">
+                            <Icon name="Plus" size={14} className="text-white" />
+                          </span>
+                        )}
+                        {s.live && (
+                          <span className="absolute -bottom-1 left-1/2 -translate-x-1/2 text-[10px] font-bold text-white bg-secondary px-2 py-0.5 rounded-full ring-2 ring-background">LIVE</span>
+                        )}
+                      </div>
                     </div>
-                  </div>
-                  <span className="text-xs text-muted-foreground max-w-[68px] truncate">{s.name}</span>
-                </button>
-              ))}
+                    <span className="text-xs text-muted-foreground max-w-[68px] truncate">{s.name}</span>
+                  </button>
+                );
+                return s.add ? (
+                  <Status key={i} avatar={s.avatar} viewers={statusViewers} trigger={inner} />
+                ) : (
+                  <span key={i}>{inner}</span>
+                );
+              })}
             </div>
           </section>
 
@@ -185,9 +201,14 @@ const Index = () => {
                   </div>
                 ))}
               </div>
-              <Button className="w-full mt-4 rounded-full gradient-brand border-0 text-white">
-                <Icon name="Settings" size={16} className="mr-1.5" /> Настройки профиля
-              </Button>
+              <ProfileSettings
+                avatar={AVATAR_M}
+                trigger={
+                  <Button className="w-full mt-4 rounded-full gradient-brand border-0 text-white">
+                    <Icon name="Settings" size={16} className="mr-1.5" /> Настройки профиля
+                  </Button>
+                }
+              />
             </div>
           </div>
 
